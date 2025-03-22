@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stage 2 Storytelling</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .sentence-line {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .dropdown {
+      flex: 1;
+      padding: 5px;
+    }
+
+    .dropdown select {
+      width: 100%;
+    }
+
+    button {
+      display: block;
+      margin-top: 10px;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #result {
+      margin-top: 20px;
+      white-space: pre-line; 
+    }
+  </style>
+</head>
+<body>
+  <h1>CLC: Stage 6 Storytelling - create your own Latin story about a thief breaking into a house.</h1>
+
+  <div id="sentences-container">
+    <div class="sentence-line">
+      <div class="dropdown">
+        <select>
+          <option value="" selected disabled>Select Nominative</option>
+          <option value=" "> </option>
+          <option value="amicus">amicus</option>
+          <option value="canis">canis</option>
+          <option value="coquus">coquus</option>
+          <option value="filius">filius</option>
+          <option value="fur">fur</option>
+          <option value="mater">mater</option>
+          <option value="pater">pater</option>
+          <option value="puella">puella</option>
+          <option value="puer">puer</option>
+          <option value="servus">servus</option>
+        </select>
+      </div>
+      <div class="dropdown">
+        <select>
+          <option value="" selected disabled>Select Accusative</option>
+          <option value=" "> </option>
+          <option value="amicum">amicum</option>
+          <option value="canem">canem</option>
+          <option value="clamorem">clamorem</option>
+          <option value="coquum">coquum</option>
+          <option value="filium">filium</option>
+          <option value="furem">furem</option>
+          <option value="matrem">matrem</option>
+          <option value="patrem">patrem</option>
+          <option value="pecuniam">pecuniam</option>
+          <option value="puellam">puellam</option>
+          <option value="puerum">puerum</option>
+          <option value="servum">servum</option>
+        </select>
+      </div>
+      <div class="dropdown">
+        <select>
+          <option value="" selected disabled>Select Preposition</option>
+          <option value=" "> </option>
+          <option value="in atrio">in atrio</option>
+          <option value="in culina">in culina</option>
+          <option value="in horto">in horto</option>
+          <option value="in tablino">in tablino</option>
+          <option value="in triclinio">in triclinio</option>
+          <option value="in via">in via</option>
+        </select>
+      </div>
+      <div class="dropdown">
+        <select>
+          <option value="" selected disabled>Select Adverb</option>
+          <option value=" "> </option>
+          <option value="non">non</option>
+          <option value="quoque">quoque</option>
+          <option value="statim">statim</option>
+          <option value="subito">subito</option>
+        </select>
+      </div>
+      <div class="dropdown">
+        <select>
+          <option value="" selected disabled>Select Verb</option>
+          <option value="ambulabat">ambulabat</option>
+          <option value="ambulavit">ambulavit</option>
+          <option value="audiebat">audiebat</option>
+          <option value="audivit">audivit</option>
+          <option value="clamabat">clamabat</option>
+          <option value="clamavit">clamavit</option>
+          <option value="dormiebat">dormiebat</option>
+          <option value="dormivit">dormivit</option>
+          <option value="laudabat">laudabat</option>
+          <option value="laudavit">laudavit</option>
+          <option value="necabat">necabat</option>
+          <option value="necavit">necavit</option>
+          <option value="oppugnabat">oppugnabat</option>
+          <option value="oppugnavit">oppugnavit</option>
+          <option value="spectabat">spectabat</option>
+          <option value="spectavit">spectavit</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" id="add-sentence-btn">Add Sentence</button>
+  <p id="result"></p>
+
+  <script>
+    const sentencesContainer = document.getElementById('sentences-container');
+    const addSentenceBtn = document.getElementById('add-sentence-btn');
+    const resultElement = document.getElementById('result');
+
+    function createDropdown(options, placeholder) {
+      const dropdown = document.createElement('div');
+      dropdown.className = 'dropdown';
+
+      const select = document.createElement('select');
+      select.innerHTML = `<option value="" selected disabled>Select ${placeholder}</option>`;
+      options.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option;
+        optionElement.textContent = option;
+        select.appendChild(optionElement);
+      });
+
+      dropdown.appendChild(select);
+
+      return dropdown;
+    }
+
+    function createSentenceLine() {
+      const sentenceLine = document.createElement('div');
+      sentenceLine.className = 'sentence-line';
+
+      const sentence = {
+        nominative: createDropdown([' ', 'amicus', 'canis', 'coquus', 'filius', 'fur', 'mater', 'pater', 'puella', 'puer', 'servus'], 'Nominative'),
+        accusative: createDropdown([' ', 'amicum', 'aquam', 'canem', 'cibum', 'clamorem', 'coquum', 'filium', 'furem', 'matrem', 'patrem', 'puellam', 'puerum', 'servum', 'vinum'], 'Accusative'),
+        preposition: createDropdown([' ', 'in atrio', 'in culina', 'in horto', 'in tablino', 'in triclinio', 'in via'], 'Preposition'),
+        adverb: createDropdown([' ', 'celeriter', 'lente', 'non', 'quoque', 'statim', 'subito'], 'Adverb'),
+        verb: createDropdown(['amabat', 'amavit', 'ambulabat', 'ambulavit', 'audiebat', 'audivit', 'clamabat', 'clamavit', 'curriebat','cucurrit', 'dormiebat', 'dormivit', 'laborabat', 'laboravit', 'laudabat', 'laudavit', 'latrabat', 'latravit', 'necabat', 'necavit', 'quaerebat', 'quaesivit', 'oppugnabat', 'oppugnavit', 'spectabat', 'spectavit'], 'Verb'),
+      };
+
+      Object.values(sentence).forEach(dropdown => {
+        sentenceLine.appendChild(dropdown);
+      });
+
+      sentencesContainer.appendChild(sentenceLine);
+    }
+
+    addSentenceBtn.addEventListener('click', createSentenceLine);
+
+    function updateResult() {
+      const sentenceLines = document.querySelectorAll('.sentence-line');
+      let result = '';
+
+      sentenceLines.forEach(sentenceLine => {
+        const selectedItems = sentenceLine.querySelectorAll('.dropdown select');
+const words = Array.from(selectedItems).map(select => select.value);
+    const filteredWords = words.map(word => {
+      switch (word) {
+        case 'Select':
+        case 'Select Nominative':
+        case 'Select Accusative':
+        case 'Select Preposition':
+        case 'Select Adverb':
+        case 'Select Verb':
+          return '';
+        default:
+          return word;
+      }
+    }).filter(word => word !== '');
+
+    const sentenceText = filteredWords.join(' ');
+
+        if (sentenceText !== '') {
+          result += sentenceText + '. ';
+        }
+      });
+
+      resultElement.textContent = result;
+    }
+
+    sentencesContainer.addEventListener('input', updateResult);
+  </script>
+</body>
+</html>
